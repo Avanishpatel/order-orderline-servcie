@@ -10,7 +10,7 @@ pipeline {
        }
        stage('Deploy'){
            steps{
-               sh 'cf push order-orderline-service -p ./build/libs/order-orderline-service-0.0.1-SNAPSHOT.jar --no-start --random-route'
+               sh 'cf push order-orderline-service -p ./build/libs/order-orderline-service-0.0.1-SNAPSHOT.jar'
            }
        }
     }
