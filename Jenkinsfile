@@ -8,14 +8,9 @@ pipeline {
              sh './gradlew clean build'
           }
        }
-       stage('Test'){
-           steps{
-               sh './gradlew test'
-           }
-       }
        stage('Deploy'){
            steps{
-               sh 'cf push order-orderline-service -p ./build/libs/order-orderline-service-0.0.1-SNAPSHOT.jar'
+               sh 'cf push order-orderline-service -p ./build/libs/order-orderline-service-0.0.1-SNAPSHOT.jar --random-route'
            }
        }
     }
