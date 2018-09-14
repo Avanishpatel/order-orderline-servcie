@@ -46,7 +46,7 @@ public class OrderController {
     public Orders addOrder(@RequestBody Orders orders) {
 
         // call account service and check for account
-        Account account = accountClient.getAccount(new Long(orders.getAccountId()));
+        Account account = accountClient.getAccount(orders.getAccountId());
 
         if (account != null) {
             logger.info("Order added :"+ orders.toString());
