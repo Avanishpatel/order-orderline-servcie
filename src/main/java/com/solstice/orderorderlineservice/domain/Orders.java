@@ -61,6 +61,7 @@ public class Orders {
         this.shippingAddressId = shippingAddressId;
     }
 
+    @Transient
     public double getTotal() {
 
         total = 0;
