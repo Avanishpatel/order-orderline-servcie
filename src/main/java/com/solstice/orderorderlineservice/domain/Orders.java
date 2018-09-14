@@ -18,6 +18,7 @@ public class Orders {
     private LocalDate orderDate;
     private long shippingAddressId;
     @Transient
+    @JsonIgnore
     private double total;
 
     @JsonIgnore
