@@ -1,13 +1,11 @@
 package com.solstice.orderorderlineservice.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -19,6 +17,7 @@ public class Orders {
     private long accountId;
     private LocalDate orderDate;
     private long shippingAddressId;
+    @Transient
     private double total;
 
     @JsonIgnore
@@ -61,7 +60,6 @@ public class Orders {
         this.shippingAddressId = shippingAddressId;
     }
 
-    @Transient
     public double getTotal() {
 
         total = 0;
