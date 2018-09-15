@@ -18,8 +18,8 @@ import java.util.Optional;
 public class OrderController {
 
     private OrderService orderService;
-    @Autowired
-    private AccountClient accountClient;
+//    @Autowired
+//    private AccountClient accountClient;
 
 
     private static Logger logger = LoggerFactory.getLogger(OrderOrderlineServiceApplication.class);
@@ -45,18 +45,18 @@ public class OrderController {
     @HystrixCommand(fallbackMethod = "addOrderFallback")
     public Orders addOrder(@RequestBody Orders orders) {
 
-        // call account service and check for account
-        Account account = accountClient.getAccount(orders.getAccountId());
-
-        if (account != null) {
-            logger.info("Order added :"+ orders.toString());
-            return orderService.addOrder(orders);
-
-        }else {
-            logger.error("Account doesn't exist.");
-            return new Orders();
-        }
-
+//        // call account service and check for account
+//        Account account = accountClient.getAccount(orders.getAccountId());
+//
+//        if (account != null) {
+//            logger.info("Order added :"+ orders.toString());
+//            return orderService.addOrder(orders);
+//
+//        }else {
+//            logger.error("Account doesn't exist.");
+//            return new Orders();
+//        }
+        return orderService.addOrder(orders);
 
     }
 
