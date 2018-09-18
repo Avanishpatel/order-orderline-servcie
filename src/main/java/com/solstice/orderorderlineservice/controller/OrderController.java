@@ -91,7 +91,9 @@ public class OrderController {
     }
 
     @GetMapping("/{id}/agg")
-    @HystrixCommand(fallbackMethod = "getOrdersAggregationByAccountFallback")
+    @HystrixCommand(fallbackMethod = "getOrdersAggregationByAccountFallback", commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")
+    })
     public OrdersAggregation getOrdersAggregationByAccount(@PathVariable("id") long orderId) {
         return orderService.getOrdersAggregationByAccount(orderId);
     }
