@@ -1,6 +1,7 @@
 package com.solstice.orderorderlineservice.controller;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.solstice.orderorderlineservice.OrderOrderlineServiceApplication;
 import com.solstice.orderorderlineservice.domain.*;
 import com.solstice.orderorderlineservice.feignClient.AccountClient;
@@ -90,7 +91,9 @@ public class OrderController {
     }
 
     @GetMapping("/{id}/agg")
-    @HystrixCommand(fallbackMethod = "getOrdersAggregationByAccountFallback")
+    @HystrixCommand(fallbackMethod = "getOrdersAggregationByAccountFallback", commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")
+    })
     public OrdersAggregation getOrdersAggregationByAccount(@PathVariable("id") long orderId) {
         return orderService.getOrdersAggregationByAccount(orderId);
     }
