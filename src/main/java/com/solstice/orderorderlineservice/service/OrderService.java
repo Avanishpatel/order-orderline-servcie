@@ -65,6 +65,8 @@ public class OrderService {
 
         Orders orders = orderRepository.findById(id).get();
 
+        orderLine.setPrice(productClient.getProductById(orderLine.getProductId()).getPrice());
+
         orderLine.setOrders(orders);
 
         return orderLineRepository.save(orderLine);
