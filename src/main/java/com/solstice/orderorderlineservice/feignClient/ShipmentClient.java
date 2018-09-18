@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
-@FeignClient("shipment-service")
+@FeignClient(name = "shipment-service", url = "http://shipment-service-zany-emu.cfapps.io")
 public interface ShipmentClient {
 
     @RequestMapping(path = "/shipments/{id}", method = RequestMethod.GET)

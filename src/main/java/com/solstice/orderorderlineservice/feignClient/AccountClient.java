@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
-@FeignClient(name = "account-address-service")
+@FeignClient(name = "account-address-service", url = "http://account-address-service.cfapps.io")
 public interface AccountClient {
 
     @RequestMapping(path = "/accounts/{id}", method = RequestMethod.GET)
