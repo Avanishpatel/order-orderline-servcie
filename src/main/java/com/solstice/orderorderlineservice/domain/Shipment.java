@@ -21,6 +21,15 @@ public class Shipment {
     public Shipment() {
     }
 
+    public Shipment(long shipmentId, long accountId, long shippingAddressId, long orderLineId, LocalDate shippingDate, LocalDate deliveryDate) {
+        this.shipmentId = shipmentId;
+        this.accountId = accountId;
+        this.shippingAddressId = shippingAddressId;
+        this.orderLineId = orderLineId;
+        this.shippingDate = shippingDate;
+        this.deliveryDate = deliveryDate;
+    }
+
     public long getShipmentId() {
         return shipmentId;
     }

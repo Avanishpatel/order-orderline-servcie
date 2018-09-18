@@ -12,4 +12,10 @@ public interface ShipmentClient {
     @RequestMapping(path = "/shipments/{id}", method = RequestMethod.GET)
     Shipment getShipment(@PathVariable("id") long id);
 
+    @RequestMapping("/shipments/shipmentId")
+    long getLastShipmentId();
+
+    @RequestMapping(path = "/shipments", method = RequestMethod.POST)
+    Shipment addShipment(@RequestBody Shipment shipment);
+
 }

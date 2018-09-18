@@ -62,7 +62,6 @@ public class OrderController {
             logger.error("Account doesn't exist.");
             return new Orders();
         }
-
     }
 
     @PutMapping("/{id}")

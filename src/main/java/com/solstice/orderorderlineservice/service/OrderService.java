@@ -46,6 +46,10 @@ public class OrderService {
 
     public Orders addOrder(Orders orders) {
 
+        // generate shipment and add automatically
+        Shipment shipment = new Shipment(0,orders.getAccountId(),orders.getShippingAddressId(),orderLineRepository.findLastOrderLIneId()+10, orders.getOrderDate().plusDays(1),orders.getOrderDate().plusDays(3));
+        shipmentClient.addShipment(shipment);
+
         return orderRepository.save(orders);
     }
 
@@ -65,9 +69,11 @@ public class OrderService {
 
         Orders orders = orderRepository.findById(id).get();
 
+        // setting price of product from product table
         orderLine.setPrice(productClient.getProductById(orderLine.getProductId()).getPrice());
 
         orderLine.setOrders(orders);
+        orderLine.setShipmentId(shipmentClient.getLastShipmentId());
 
         return orderLineRepository.save(orderLine);
     }
