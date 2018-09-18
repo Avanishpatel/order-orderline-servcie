@@ -5,6 +5,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.solstice.orderorderlineservice.OrderOrderlineServiceApplication;
 import com.solstice.orderorderlineservice.domain.*;
 import com.solstice.orderorderlineservice.feignClient.AccountClient;
+import com.solstice.orderorderlineservice.feignClient.ProductClient;
 import com.solstice.orderorderlineservice.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +20,12 @@ import java.util.Optional;
 public class OrderController {
 
     private OrderService orderService;
-//    @Autowired
-//    private AccountClient accountClient;
+
+    @Autowired
+    private AccountClient accountClient;
+
+    @Autowired
+    private ProductClient productClient;
 
 
     private static Logger logger = LoggerFactory.getLogger(OrderOrderlineServiceApplication.class);
@@ -46,18 +51,17 @@ public class OrderController {
     @HystrixCommand(fallbackMethod = "addOrderFallback")
     public Orders addOrder(@RequestBody Orders orders) {
 
-//        // call account service and check for account
-//        Account account = accountClient.getAccount(orders.getAccountId());
-//
-//        if (account != null) {
-//            logger.info("Order added :"+ orders.toString());
-//            return orderService.addOrder(orders);
-//
-//        }else {
-//            logger.error("Account doesn't exist.");
-//            return new Orders();
-//        }
-        return orderService.addOrder(orders);
+        // call account service and check for account
+        Account account = accountClient.getAccount(orders.getAccountId());
+
+        if (account != null) {
+            logger.info("Order added :"+ orders.toString());
+            return orderService.addOrder(orders);
+
+        }else {
+            logger.error("Account doesn't exist.");
+            return new Orders();
+        }
 
     }
 
@@ -87,7 +91,15 @@ public class OrderController {
     @HystrixCommand(fallbackMethod = "addOrderLineItemsFallback")
     public OrderLine addOrderLineItems(@PathVariable("id") long id, @RequestBody OrderLine orderLine) {
 
-        return orderService.addOrderLineItems(id, orderLine);
+        Product product = productClient.getProductById(orderLine.getProductId());
+
+        if (product != null) {
+
+            return orderService.addOrderLineItems(id, orderLine);
+        }else {
+            logger.error("Product with id "+ orderLine.getProductId()+ " doesn't exist");
+            return new OrderLine();
+        }
     }
 
     @GetMapping("/{id}/agg")
