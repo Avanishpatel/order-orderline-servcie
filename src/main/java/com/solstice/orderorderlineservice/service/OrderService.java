@@ -86,8 +86,6 @@ public class OrderService {
 
             long shipmentId = orderLine.getShipmentId();
             Shipment shipment = shipmentClient.getShipment(shipmentId);
-
-
             orderLineItems.add(new OrderLineItems(productName, quantity, shipment.getShippingDate(), shipment.getDeliveryDate()));
 
         }
